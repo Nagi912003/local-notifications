@@ -5,10 +5,10 @@
 import FlutterMacOS
 import Foundation
 
-import awesome_notifications
 import flutter_local_notifications
+import flutter_native_timezone_updated_gradle
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  AwesomeNotificationsPlugin.register(with: registry.registrar(forPlugin: "AwesomeNotificationsPlugin"))
   FlutterLocalNotificationsPlugin.register(with: registry.registrar(forPlugin: "FlutterLocalNotificationsPlugin"))
+  FlutterNativeTimezonePlugin.register(with: registry.registrar(forPlugin: "FlutterNativeTimezonePlugin"))
 }

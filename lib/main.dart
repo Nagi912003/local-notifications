@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
+// import 'package:awesome_notifications/awesome_notifications.dart';
+// import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 import 'package:project_m/helpers/notification_service.dart';
+import 'package:project_m/socendscreen.dart';
 
 void main() {
-  AwesomeNotifications().initialize(
-      null,
-      [
-        NotificationChannel(
-          channelKey: 'basic_channel',
-          channelName: 'Basic notifications',
-          channelDescription: 'Notification channel for basic tests',
-        ),
-      ],
-      debug: true);
+  // AwesomeNotifications().initialize(
+  //     null,
+  //     [
+  //       NotificationChannel(
+  //         channelKey: 'basic_channel',
+  //         channelName: 'Basic notifications',
+  //         channelDescription: 'Notification channel for basic tests',
+  //       ),
+  //     ],
+  //     debug: true);
+
+  tz.initializeTimeZones();
   runApp(const MyApp());
 }
 
@@ -45,37 +50,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
+    // AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    //   if (!isAllowed) {
+    //     AwesomeNotifications().requestPermissionToSendNotifications();
+    //   }
+    // });
 
     notificationsServices.initialiseNotifications();
 
     super.initState();
   }
 
-  triggerNotification() async {
-    await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: 10,
-        channelKey: 'basic_channel',
-        title: 'Simple Notification',
-        body: 'Simple body',
-        notificationLayout: NotificationLayout.Default,
-        bigPicture: 'https://picsum.photos/300/200?random=1',
-        badge: 10,
-        showWhen: true,
-        autoDismissible: true,
-        displayOnForeground: true,
-        displayOnBackground: true,
-        locked: true,
-        color: Colors.deepPurple,
-        backgroundColor: Colors.deepPurple,
-      ),
-    );
-  }
+  // triggerNotification() async {
+  //   await AwesomeNotifications().createNotification(
+  //     content: NotificationContent(
+  //       id: 10,
+  //       channelKey: 'basic_channel',
+  //       title: 'Simple Notification',
+  //       body: 'Simple body',
+  //       notificationLayout: NotificationLayout.Default,
+  //       bigPicture: 'https://picsum.photos/300/200?random=1',
+  //       badge: 10,
+  //       showWhen: true,
+  //       autoDismissible: true,
+  //       displayOnForeground: true,
+  //       displayOnBackground: true,
+  //       locked: true,
+  //       color: Colors.deepPurple,
+  //       backgroundColor: Colors.deepPurple,
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -101,14 +106,26 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Stop Notification')),
           ElevatedButton(
               onPressed: () {
-                triggerNotification();
+                // triggerNotification();
               },
               child: const Text('Trigger Notification')),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          notificationsServices.stopNotification();
+          // notificationsServices.stopNotification();
+
+          final snackBar = SnackBar(
+            content: Text('Notification Scheduled'),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {
+                // Some code to undo the change.
+              },
+            ),
+          );
+
+          ScaffoldMessenger.of(context)..removeCurrentSnackBar()..showSnackBar(snackBar);
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
